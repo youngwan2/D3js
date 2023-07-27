@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+  </head>
+  <body>
+    <svg width="500" height="500"></svg>
+
+    <script>
+      const sampleData = [100, 10, 30, 50, 10, 70, 200, 90];
+      const sampleData2 = [150, 15, 10, 90, 40, 30, 150, 30];
+      const svg = d3.select("svg");
+
+      sampleData.forEach((v, i) => {
+        /* 사각형 (막대) 추가하기 */
+        svg
+          .append("rect")
+          .attr("id", `bar${i}`)
+          .attr("height", v)
+          .attr("width", 30)
+          .attr("x", i * 50 + 100)
+          .attr("y", 300 - v+100)
+          .transition()
+          .duration(3000)
+          .ease(d3.easeLinear)
+          .attr('height',300-sampleData2[i]+100)
+          .attr("y", 300 - sampleData2[i]+100)
+          
+
+        /* 텍스트 추가하기 */
+        svg
+          .append("text")
+          .text(sampleData2[i])
+          .style("fill", "red")
+          .attr("x", i * 50 + 100)
+          .attr("y", 300 - sampleData2[i])
+          .attr("font-size", "20px")
+          .attr("font-weight", "bold");
+      });
+
+      d3.select("#bar0")
+        .transition()
+        .duration(3000)
+        .ease(d3.easeLinear)
+        .style("fill", "blue")
+        .delay(3000);
+    </script>
+  </body>
+</html>
