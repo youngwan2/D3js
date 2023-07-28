@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+  </head>
+  <body>
+    <div class="canvas"></div>
+
+    <script>
+      const sampleData = [
+        // 반지름, x축, y축, 채울 색
+        [5, 20, 30, "#ff0000"],
+        [5, 320, 90, "#ff0000"],
+        [5, 150, 50, "#ff0000"],
+        [7, 120, 70, "#ff0000"],
+        [7, 530, 110, "#ff0000"],
+        [7, 410, 20, "#ff0000"],
+        [12, 720, 60, "#ff0000"],
+        [12, 30, 110, "#ff0000"],
+        [12, 90, 130, "#ff0000"],
+        [19, 510, 180, "#ff0000"],
+        [19, 310, 120, "#ff0000"],
+        [8, 50, 150, "#ff0000"],
+        [7, 50, 350, "#ff0000"],
+      ];
+
+      const svg = d3
+        .select(".canvas")
+        .append("svg")
+        .attr("width", 1000)
+        .attr("height", 1000);
+
+      svg
+        .selectAll("circle") // circle 태그를 모두 선택한다.
+        .data(sampleData)
+        // enter(데이터 수 > dom요소)::데이터 크기가 dom 요소 크기 보다 큰 경우,
+        // update(재적용, 화면 갱신),
+        // exit(데이터 수 < dom요소) :: 데이터 크기가 dom 요소크기 보다 작은 경우
+        .enter()
+        .append("circle")
+        .attr("r", (d) => d[0])
+        .attr("cx", (d) => d[1]+10)
+        .attr("cy", (d) => d[2]+10)
+        .attr("fill", (d) => d[3]);
+    </script>
+  </body>
+</html>
