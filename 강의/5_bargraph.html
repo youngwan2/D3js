@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+      body {
+      }
+    </style>
+  </head>
+  <body>
+    <div class="canvas"></div>
+
+    <script>
+      const [width, height] = [800, 800];
+
+      const svg = d3
+        .select('.canvas')
+        .append('svg')
+        .style('border', '1px solid black')
+        .style('background', 'rgba(0,0,0,0.2)')
+        .attr('width', 800)
+        .attr('height', 800);
+
+      // canvas 안의 svg 내에 그려질 그래프에 여백을 주기 위한 셋팅
+      let [mt, mb, mr, ml] = [20, 20, 20, 20];
+
+      // 캔버스 전체 넓이 - 여백(오) -여백(왼)
+      const graphWidth = width - mr - ml;
+      const graphHeight = height - mt - mb;
+
+      // 기존 svg에서 여백을 준 만큼 우측과 하단에 여백이 생기므로,
+      // 이를 이동시켜 중앙 정렬한다.
+      const graph = svg
+        .append('g')
+        .attr('width', graphWidth)
+        .attr('height', graphHeight)
+        .attr('translate', `translate(${ml}, ${mt})`);
+
+      // 전개연산자를 사용하여 지역이름이 '전국' 인 부분을 제거함.
+      d3.json('4_data/data4.json').then((data) => {
+        [_, ...data] = [...data];
+        console.log(data);
+
+        const x = d3
+          .scaleBand()
+          .domain(data.map((item) => item.지역이름))
+          .range([0, graphWidth])
+          .padding(0.1);
+
+        const y = d3
+          .scaleLinear()
+          .domain(data.map((item) => item.확진자수))
+          .range([graphHeight, 0]);
+      });
+    </script>
+  </body>
+</html>
