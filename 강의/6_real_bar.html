@@ -82,7 +82,7 @@
                 .call(d3.axisBottom(x));
 
             // y 축 라벨 추가
-            svg.append("g")
+            const axis_Y = svg.append("g")
                 .attr("transform", `translate(${좌측여백},50)`)
                 .call(d3.axisLeft(y));
         });
